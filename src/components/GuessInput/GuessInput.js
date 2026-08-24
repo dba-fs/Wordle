@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { WORD_LENGTH } from '../../constants';
+
 function GuessInput({ handleSubmitGuess }) {
   const [guess, setGuess] = React.useState('');
 
@@ -18,14 +20,14 @@ function GuessInput({ handleSubmitGuess }) {
         required
         id="guess-input"
         type="text"
-        maxLength={5}
-        pattern="[A-Z]{5}"
-        title="5 letter word"
+        maxLength={WORD_LENGTH}
+        pattern={`[A-Z]{${WORD_LENGTH}}`}
+        title={`${WORD_LENGTH} letter word`}
         value={guess}
         onChange={(event) => {
           // toUpperCase() can lengthen the value ('ß' -> 'SS'), which
           // maxLength does not constrain, so re-clamp it here.
-          setGuess(event.target.value.toUpperCase().slice(0, 5));
+          setGuess(event.target.value.toUpperCase().slice(0, WORD_LENGTH));
         }}
       />
     </form>
