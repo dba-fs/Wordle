@@ -23,7 +23,9 @@ function GuessInput() {
         title="5 letter word"
         value={guess}
         onChange={(event) => {
-          setGuess(event.target.value.toUpperCase());
+          // toUpperCase() can lengthen the value ('ß' -> 'SS'), which
+          // maxLength does not constrain, so re-clamp it here.
+          setGuess(event.target.value.toUpperCase().slice(0, 5));
         }}
       />
     </form>
