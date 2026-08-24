@@ -4,6 +4,7 @@ import { sample } from '../../utils';
 import { WORDS } from '../../data';
 
 import GuessInput from '../GuessInput';
+import GuessResults from '../GuessResults';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -14,7 +15,24 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 function Game() {
-  return <GuessInput />;
+  const [guesses, setGuesses] = React.useState([]);
+  // Guesses repeat (you can submit HELLO twice), so they need a stable id of
+  // their own for React keys.
+  const nextGuessId = React.useRef(0);
+
+  function handleSubmitGuess(value) {
+    setGuesses((currentGuesses) => [
+      ...currentGuesses,
+      { id: nextGuessId.current++, value },
+    ]);
+  }
+
+  return (
+    <>
+      <GuessResults guesses={guesses} />
+      <GuessInput handleSubmitGuess={handleSubmitGuess} />
+    </>
+  );
 }
 
 export default Game;
