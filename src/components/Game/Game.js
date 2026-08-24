@@ -16,16 +16,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
-  // Guesses repeat (you can submit HELLO twice), so they need a stable id of
-  // their own for React keys.
-  const nextGuessId = React.useRef(0);
 
-  function handleSubmitGuess(value) {
-    // Mint the id out here: state updaters have to be pure, and React runs
-    // them more than once per dispatch.
-    const id = nextGuessId.current++;
-
-    setGuesses((currentGuesses) => [...currentGuesses, { id, value }]);
+  function handleSubmitGuess(guess) {
+    setGuesses((currentGuesses) => [...currentGuesses, guess]);
   }
 
   return (
