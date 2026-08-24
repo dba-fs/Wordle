@@ -21,10 +21,11 @@ function Game() {
   const nextGuessId = React.useRef(0);
 
   function handleSubmitGuess(value) {
-    setGuesses((currentGuesses) => [
-      ...currentGuesses,
-      { id: nextGuessId.current++, value },
-    ]);
+    // Mint the id out here: state updaters have to be pure, and React runs
+    // them more than once per dispatch.
+    const id = nextGuessId.current++;
+
+    setGuesses((currentGuesses) => [...currentGuesses, { id, value }]);
   }
 
   return (
