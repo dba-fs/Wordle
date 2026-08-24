@@ -18,9 +18,8 @@ function GuessInput() {
         required
         id="guess-input"
         type="text"
-        minLength={5}
         maxLength={5}
-        pattern="[a-zA-Z]{5}"
+        pattern="[A-Z]{5}"
         title="5 letter word"
         value={guess}
         onChange={(event) => {
