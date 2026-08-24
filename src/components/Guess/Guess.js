@@ -9,7 +9,7 @@ function Guess({ value }) {
       {range(WORD_LENGTH).map((index) => (
         // The cells are fixed slots, so the index is a stable identity.
         <span key={index} className="cell">
-          {value ? value[index] : undefined}
+          {value?.[index]}
         </span>
       ))}
     </p>
