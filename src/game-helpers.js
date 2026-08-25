@@ -53,3 +53,32 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+// The keyboard shows one colour per letter, but a letter can come back with
+// different statuses across guesses: guessing "PAPER" against "APPLE" marks
+// the first P as misplaced and the second as correct. Lower rank wins, so the
+// most informative status is the one that sticks.
+const STATUS_RANKS = {
+  correct: 0,
+  misplaced: 1,
+  incorrect: 2,
+};
+
+export function getStatusByLetter(guesses, answer) {
+  const statusByLetter = {};
+
+  for (const guess of guesses) {
+    for (const { letter, status } of checkGuess(guess, answer)) {
+      const knownStatus = statusByLetter[letter];
+
+      if (
+        knownStatus === undefined ||
+        STATUS_RANKS[status] < STATUS_RANKS[knownStatus]
+      ) {
+        statusByLetter[letter] = status;
+      }
+    }
+  }
+
+  return statusByLetter;
+}

@@ -206,6 +206,63 @@ h1 {
   }
 }
 
+/*
+  Keyboard: a summary of which letters have been tried, so it reuses the
+  board's status colours rather than declaring its own.
+*/
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.keyboard-letter {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-content: center;
+  border-radius: 4px;
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
+  font-size: 1rem;
+}
+
+.keyboard-letter.correct {
+  background: var(--color-success);
+  color: white;
+}
+.keyboard-letter.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+}
+.keyboard-letter.misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+
+.restart-button {
+  margin-top: 16px;
+  padding: 8px 24px;
+  border-radius: 4px;
+  background: white;
+  color: var(--color-gray-100);
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* The global button reset drops the default focus ring on some browsers. */
+.restart-button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
 .visually-hidden {
   position: absolute;
   overflow: hidden;
