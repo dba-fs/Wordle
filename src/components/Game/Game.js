@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
 
+import Banner from '../Banner';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
 
@@ -17,6 +19,12 @@ if (process.env.NODE_ENV !== 'production') {
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
 
+  // Derived from the guess list, so there's no second source of truth to
+  // keep in sync.
+  const hasWon = guesses.at(-1) === answer;
+  const hasLost = !hasWon && guesses.length >= NUM_OF_GUESSES_ALLOWED;
+  const isGameOver = hasWon || hasLost;
+
   function handleSubmitGuess(guess) {
     setGuesses((currentGuesses) => [...currentGuesses, guess]);
   }
@@ -24,7 +32,14 @@ function Game() {
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInput handleSubmitGuess={handleSubmitGuess} />
+      <GuessInput handleSubmitGuess={handleSubmitGuess} disabled={isGameOver} />
+      {isGameOver && (
+        <Banner
+          status={hasWon ? 'won' : 'lost'}
+          numOfGuesses={guesses.length}
+          answer={answer}
+        />
+      )}
     </>
   );
 }
