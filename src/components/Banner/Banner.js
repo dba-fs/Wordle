@@ -2,15 +2,15 @@ import React from 'react';
 
 function Banner({ status, numOfGuesses, answer }) {
   const bannerRef = React.useRef(null);
-  const isGameOver = status === 'won' || status === 'lost';
 
-  // Disabling the input drops focus onto <body>, so pull it back to the
-  // result — otherwise the next Tab restarts from the top of the document.
+  // The banner is the game's result announcement, so it claims focus as soon
+  // as it appears. Without this, focus is still on the input that just got
+  // disabled, which drops it to <body> and restarts the next Tab from the top
+  // of the document. The ref is only set while a banner is showing, so this
+  // is a no-op during play.
   React.useEffect(() => {
-    if (isGameOver) {
-      bannerRef.current.focus();
-    }
-  }, [isGameOver]);
+    bannerRef.current?.focus();
+  }, [status]);
 
   // Both live regions stay mounted for the whole game. Assistive tech only
   // announces changes made *inside* a region that already existed, so a

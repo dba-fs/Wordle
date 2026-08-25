@@ -173,7 +173,7 @@ h1 {
   empty flex gaps to .game-wrapper.
 */
 .banner-live-region {
-  position: fixed;
+  position: absolute;
 }
 
 .banner {
