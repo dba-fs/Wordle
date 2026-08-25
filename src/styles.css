@@ -223,8 +223,11 @@ h1 {
 }
 
 .keyboard-letter {
+  /* Squares that shrink with the board, but never past legibility — at that
+     point they spill into .game-wrapper's padding instead. */
   width: 2rem;
-  height: 2rem;
+  min-width: 1.5rem;
+  aspect-ratio: 1 / 1;
   display: grid;
   place-content: center;
   border-radius: 4px;

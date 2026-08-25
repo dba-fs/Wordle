@@ -41,8 +41,11 @@ function Game() {
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInput handleSubmitGuess={handleSubmitGuess} disabled={isGameOver} />
+      {/* Above the input, because the game-over banner is fixed to the bottom
+          of the viewport and would otherwise cover the keyboard. Covering the
+          input instead costs nothing: it's disabled by then. */}
       <Keyboard guesses={guesses} answer={answer} />
+      <GuessInput handleSubmitGuess={handleSubmitGuess} disabled={isGameOver} />
       <Banner
         status={gameStatus}
         numOfGuesses={guesses.length}

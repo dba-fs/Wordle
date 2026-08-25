@@ -16,7 +16,11 @@ function Keyboard({ guesses, answer }) {
   const statusByLetter = getStatusByLetter(guesses, answer);
 
   return (
-    <div className="keyboard" role="group" aria-label="Letters guessed so far">
+    <div
+      className="keyboard"
+      role="group"
+      aria-label="Alphabet, with the status of each guessed letter"
+    >
       {KEYBOARD_ROWS.map((row) => (
         <div key={row} className="keyboard-row">
           {row.split('').map((letter) => {
