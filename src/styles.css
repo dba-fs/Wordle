@@ -161,6 +161,21 @@ h1 {
   outline-offset: 4px;
 }
 
+.guess-input-wrapper input:disabled {
+  background: var(--color-gray-900);
+  color: var(--color-gray-500);
+  cursor: not-allowed;
+}
+
+/*
+  The two live regions stay mounted for the whole game so that assistive tech
+  announces the banner. Taking them out of flow keeps them from contributing
+  empty flex gaps to .game-wrapper.
+*/
+.banner-live-region {
+  position: absolute;
+}
+
 .banner {
   position: fixed;
   left: 0;
@@ -183,6 +198,12 @@ h1 {
 .sad.banner {
   background: var(--color-error);
   color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner {
+    animation: none;
+  }
 }
 
 .visually-hidden {

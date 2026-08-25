@@ -2,7 +2,7 @@ import React from 'react';
 
 import { WORD_LENGTH } from '../../constants';
 
-function GuessInput({ handleSubmitGuess }) {
+function GuessInput({ handleSubmitGuess, disabled }) {
   const [guess, setGuess] = React.useState('');
 
   function handleSubmit(event) {
@@ -18,6 +18,7 @@ function GuessInput({ handleSubmitGuess }) {
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         required
+        disabled={disabled}
         id="guess-input"
         type="text"
         maxLength={WORD_LENGTH}
