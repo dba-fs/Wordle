@@ -23,7 +23,8 @@ function Game() {
   // keep in sync.
   const hasWon = guesses.at(-1) === answer;
   const hasLost = !hasWon && guesses.length >= NUM_OF_GUESSES_ALLOWED;
-  const isGameOver = hasWon || hasLost;
+  const gameStatus = hasWon ? 'won' : hasLost ? 'lost' : 'running';
+  const isGameOver = gameStatus !== 'running';
 
   function handleSubmitGuess(guess) {
     setGuesses((currentGuesses) => [...currentGuesses, guess]);
@@ -33,13 +34,11 @@ function Game() {
     <>
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput handleSubmitGuess={handleSubmitGuess} disabled={isGameOver} />
-      {isGameOver && (
-        <Banner
-          status={hasWon ? 'won' : 'lost'}
-          numOfGuesses={guesses.length}
-          answer={answer}
-        />
-      )}
+      <Banner
+        status={gameStatus}
+        numOfGuesses={guesses.length}
+        answer={answer}
+      />
     </>
   );
 }

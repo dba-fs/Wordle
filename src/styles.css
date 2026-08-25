@@ -167,6 +167,15 @@ h1 {
   cursor: not-allowed;
 }
 
+/*
+  The two live regions stay mounted for the whole game so that assistive tech
+  announces the banner. Taking them out of flow keeps them from contributing
+  empty flex gaps to .game-wrapper.
+*/
+.banner-live-region {
+  position: fixed;
+}
+
 .banner {
   position: fixed;
   left: 0;
