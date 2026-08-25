@@ -71,10 +71,7 @@ export function getStatusByLetter(guesses, answer) {
     for (const { letter, status } of checkGuess(guess, answer)) {
       const knownStatus = statusByLetter[letter];
 
-      if (
-        knownStatus === undefined ||
-        STATUS_RANKS[status] < STATUS_RANKS[knownStatus]
-      ) {
+      if (!knownStatus || STATUS_RANKS[status] < STATUS_RANKS[knownStatus]) {
         statusByLetter[letter] = status;
       }
     }

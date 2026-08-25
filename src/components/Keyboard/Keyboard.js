@@ -2,7 +2,11 @@ import React from 'react';
 
 import { getStatusByLetter } from '../../game-helpers';
 
-const KEYBOARD_ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+const KEYBOARD_ROWS = [
+  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+  ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
+];
 
 // Status colours are the whole point of this panel, so they also need a text
 // equivalent for anyone who can't see them.
@@ -22,8 +26,8 @@ function Keyboard({ guesses, answer }) {
       aria-label="Alphabet, with the status of each guessed letter"
     >
       {KEYBOARD_ROWS.map((row) => (
-        <div key={row} className="keyboard-row">
-          {row.split('').map((letter) => {
+        <div key={row[0]} className="keyboard-row">
+          {row.map((letter) => {
             const status = statusByLetter[letter];
 
             return (
