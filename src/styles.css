@@ -236,7 +236,12 @@ h1 {
   border-radius: 4px;
   background: var(--color-gray-900);
   color: var(--color-gray-100);
-  font-size: 1rem;
+  /* Bold at 1.2rem clears WCAG's 18.66px-bold large-text threshold, which is
+     what lets these keys reuse the .cell status colours: white on
+     --color-warning is 3.88:1, over the 3:1 large-text bar but under the
+     4.5:1 one that 1rem text would have to meet. */
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .restart-button {

@@ -34,7 +34,10 @@ function Game() {
   }
 
   function handleRestart() {
-    setAnswer(sample(WORDS));
+    // Excluding the current answer, because WORDS is short enough (50 entries)
+    // that a plain re-sample replays the word just finished often enough to
+    // read as a bug.
+    setAnswer(sample(WORDS.filter((word) => word !== answer)));
     setGuesses([]);
   }
 
