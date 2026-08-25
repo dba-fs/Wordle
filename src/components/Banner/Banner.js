@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Banner({ status, numOfGuesses, answer }) {
+function Banner({ status, numOfGuesses, answer, handleRestart }) {
   const bannerRef = React.useRef(null);
 
   // The banner is the game's result announcement, so it claims focus as soon
@@ -27,6 +27,9 @@ function Banner({ status, numOfGuesses, answer }) {
               </strong>
               .
             </p>
+            <button className="restart-button" onClick={handleRestart}>
+              Restart game
+            </button>
           </div>
         )}
       </div>
@@ -36,6 +39,9 @@ function Banner({ status, numOfGuesses, answer }) {
             <p>
               Sorry, the correct answer is <strong>{answer}</strong>.
             </p>
+            <button className="restart-button" onClick={handleRestart}>
+              Restart game
+            </button>
           </div>
         )}
       </div>

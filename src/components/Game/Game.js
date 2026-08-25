@@ -7,17 +7,20 @@ import { WORDS } from '../../data';
 import Banner from '../Banner';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
-
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console. Parcel
-// inlines NODE_ENV, so this whole block is stripped from production builds.
-if (process.env.NODE_ENV !== 'production') {
-  console.info({ answer });
-}
+import Keyboard from '../Keyboard';
 
 function Game() {
+  // In state rather than a module constant, so restarting can pick a new one.
+  const [answer, setAnswer] = React.useState(() => sample(WORDS));
   const [guesses, setGuesses] = React.useState([]);
+
+  // To make debugging easier, we'll log the solution in the console. Parcel
+  // inlines NODE_ENV, so the log itself is stripped from production builds.
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.info({ answer });
+    }
+  }, [answer]);
 
   // Derived from the guess list, so there's no second source of truth to
   // keep in sync.
@@ -30,14 +33,27 @@ function Game() {
     setGuesses((currentGuesses) => [...currentGuesses, guess]);
   }
 
+  function handleRestart() {
+    // Excluding the current answer, because WORDS is short enough (50 entries)
+    // that a plain re-sample replays the word just finished often enough to
+    // read as a bug.
+    setAnswer(sample(WORDS.filter((word) => word !== answer)));
+    setGuesses([]);
+  }
+
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
+      {/* Above the input, because the game-over banner is fixed to the bottom
+          of the viewport and would otherwise cover the keyboard. Covering the
+          input instead costs nothing: it's disabled by then. */}
+      <Keyboard guesses={guesses} answer={answer} />
       <GuessInput handleSubmitGuess={handleSubmitGuess} disabled={isGameOver} />
       <Banner
         status={gameStatus}
         numOfGuesses={guesses.length}
         answer={answer}
+        handleRestart={handleRestart}
       />
     </>
   );

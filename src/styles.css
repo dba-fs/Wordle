@@ -124,17 +124,20 @@ h1 {
   --radius: 0px 0px 0px 4px;
 }
 
-.cell.correct {
+.cell.correct,
+.keyboard-letter.correct {
   background: var(--color-success);
   border-color: var(--color-success);
   color: white;
 }
-.cell.incorrect {
+.cell.incorrect,
+.keyboard-letter.incorrect {
   background: var(--color-gray-300);
   border-color: var(--color-gray-300);
   color: white;
 }
-.cell.misplaced {
+.cell.misplaced,
+.keyboard-letter.misplaced {
   background: var(--color-warning);
   border-color: var(--color-warning);
   color: white;
@@ -204,6 +207,66 @@ h1 {
   .banner {
     animation: none;
   }
+}
+
+/*
+  Keyboard: a summary of which letters have been tried. Its status colours
+  come from the .cell rules above, which name both selectors.
+*/
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.keyboard-letter {
+  /* Squares that shrink with the board, but never past legibility — at that
+     point they spill into .game-wrapper's padding instead. */
+  width: 2rem;
+  min-width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-content: center;
+  border-radius: 4px;
+  background: var(--color-gray-900);
+  color: var(--color-gray-100);
+  /* Bold at 1.2rem clears WCAG's 18.66px-bold large-text threshold, which is
+     what lets these keys reuse the .cell status colours: white on
+     --color-warning is 3.88:1, over the 3:1 large-text bar but under the
+     4.5:1 one that 1rem text would have to meet. */
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.restart-button {
+  margin-top: 16px;
+  padding: 8px 24px;
+  border-radius: 4px;
+  background: white;
+  color: var(--color-gray-100);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* A white ring reads more clearly than the UA default against the banner. */
+.restart-button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+/*
+  .banner is fixed to the bottom of the viewport, so nothing in the flow
+  reserves room for it. While one is up, the game does — otherwise on a short
+  viewport the banner sits over the last keyboard row at every scroll offset.
+*/
+.game-wrapper:has(.banner) {
+  padding-bottom: calc(var(--game-spacing) + 9rem);
 }
 
 .visually-hidden {

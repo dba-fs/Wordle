@@ -4,6 +4,16 @@ import { WORD_LENGTH } from '../../constants';
 
 function GuessInput({ handleSubmitGuess, disabled }) {
   const [guess, setGuess] = React.useState('');
+  const inputRef = React.useRef(null);
+
+  // Typing here is the only move available while the game is running, so the
+  // input holds focus. This also catches focus after a restart, which unmounts
+  // the banner button that was focused and would otherwise drop it to <body>.
+  React.useEffect(() => {
+    if (!disabled) {
+      inputRef.current.focus();
+    }
+  }, [disabled]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -17,6 +27,7 @@ function GuessInput({ handleSubmitGuess, disabled }) {
     <form className="guess-input-wrapper" onSubmit={handleSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
+        ref={inputRef}
         required
         disabled={disabled}
         id="guess-input"
